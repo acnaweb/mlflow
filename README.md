@@ -4,7 +4,9 @@ MLFlow - Model registry
 
 ## Usage
 
+```sh
 mlflow server --backend-store-uri mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mlflow-db.csifmnnguh7c.us-east-2.rds.amazonaws.com:3306/${MYSQL_DATABASE} 
+```
 
 ### Run server using S3
 
