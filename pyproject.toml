@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlflow-study"
+version = "0.1.0"
+description = "MLFlow study"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Antonio Carlos de Lima Júnior", email = "ac@marketmining.com.br" }
+]
+dependencies = [
+  "pandas~=2.3", 
+  "scikit-learn~=1.7", 
+  "mlflow~=3.1"
+]
+
+[project.urls]
+homepage = "https://github.com/acnaweb/mlflow"
+
+[project.optional-dependencies]
+dev = [
+]
+quality = [
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+run = "main:run"
