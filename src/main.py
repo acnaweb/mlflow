@@ -2,6 +2,7 @@ import os
 import uuid
 
 import pandas as pd
+from loguru import logger
 from sklearn.datasets import load_iris
 from sklearn.linear_model import ElasticNet
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -23,6 +24,8 @@ def compute_metrics(actual, predicted):
 
 
 def run():
+    mlflow.set_tracking_uri(tracking_uri)
+    mlflow.set_experiment("Iris Model")
 
     # Load Iris dataset and prepare the DataFrame
     iris = load_iris()
@@ -34,7 +37,6 @@ def run():
     # Split into training and testing datasets
     train_df, test_df = train_test_split(iris_df, test_size=0.2, random_state=42)
 
-    mlflow.set_tracking_uri(tracking_uri)
     # Start a run to represent the training job
     run_name = f"run-${uuid.uuid4()}"
     with mlflow.start_run(run_name=run_name):
@@ -62,7 +64,7 @@ def run():
 
         # Inspect the LoggedModel and its properties
         logged_model = mlflow.get_logged_model(model_info.model_id)
-        print(logged_model.model_id, logged_model.params)
+        logger.info(logged_model.model_id, logged_model.params)
 
         # Evaluate the model on the training dataset and log metrics
         # These metrics are now linked to the LoggedModel entity
@@ -80,4 +82,4 @@ def run():
 
         # Inspect the LoggedModel, now with metrics
         logged_model = mlflow.get_logged_model(model_info.model_id)
-        print(logged_model.model_id, logged_model.metrics)
+        logger.info(logged_model.model_id, logged_model.metrics)
